@@ -160,7 +160,7 @@ cf={Group Outlying Aspects Mining},
 
 %%==========================================================================================
 %%
-\begin{slide}{Problem Definition}
+\begin{slide}[toc=,bm=]{Problem Definition}
 \begin{center}
 \twotonebox{\rotatebox{90}{Defn}}{\parbox{.86\textwidth}
 {Models of emotion are commonly divided into
@@ -322,134 +322,61 @@ which may lead to the low accuracy of emotion classification.
 
 \end{itemize}
 
-%%==========================================================================================
-\begin{note}
-Based on current existing methods,
-there still remains some research challenges.
-
-The first one is how to represent the group features
-based on the features of the individuals in the group.
-
-Although the arithmetic mean of all elements
-in each feature can describe the features of one group.
-It can be affected by outlier values,
-and can't reflect the entire distribution of group features.L
-\end{note}
-%%==========================================================================================
 
 \end{slide}
 %%
 %%==========================================================================================
 
 
+\section{Data Set}
+
 %%==========================================================================================
 %%
-\begin{slide}[toc=,bm=]{Challenges (2)}
+\begin{slide}[toc=,bm=]{Data Set}
 
 \begin{itemize}
 \item
-How to \textcolor{orange}{evaluate} the outlying degree in different aspects.
+Emobank contains 10,548 texts annotated with
+Valence, Arousal and Dominance 
+dimensional emotion scores, 
+ranged from 1.0 to 5.0.
+\begin{center}
+	\begin{tabular}{ c c c c }
+		\toprule
+		Corpus & Domain  & Raw & Filtered  \\
+		\midrule
+		SE07 &  news headlines &  1250 &  1192 \\
+		\hline
+		\multirow{6}{*}{MASC} &  blogs&  1378&  1336\\
+		&  essays &  1196 &  1135 \\
+		&  fiction &  2893 &  2753 \\
+		&  letters &  1479 &  1413 \\
+		& newspapers & 1381 & 1314 \\
+		& traval guides & 971 & 919 \\
+		\bottomrule
+	\end{tabular}
+\end{center}
 
-\begin{itemize}
-\item
-Need design a scoring function when necessary.
-
-\item
-Adopting an appropriate scoring function (without dimension bias) remains a problem.
+\item 
+SE07 is  annotated according to 
+Ekman’s six Basic Emotion 
+on a [0,100] scale, respectively.
 
 \end{itemize}
-\end{itemize}
-
-%%==========================================================================================
-\begin{note}
-The second challenge is how to evaluate the outlying degree of
-the query group between different aspects.
-
-In that case,
-we need to design a scoring function to measure the outlying degree.
-But adopting an appropriate scoring function without dimension bias still remains a problem.
-\end{note}
-%%==========================================================================================
 
 \end{slide}
 %%
 %%==========================================================================================
 
-
-%%==========================================================================================
-%%
-\begin{slide}[toc=,bm=]{Challenges (3)}
-
-\begin{itemize}
-\item
-How to \textcolor{orange}{improve} the efficiency.
-
-\begin{itemize}
-
-\item
-When the dimension of the \textcolor{orange}{data is high},
-the candidate subspace grows exponentially.
-
-\item
-It will easily go beyond the limits of the computation resources.
-
-\end{itemize}
-\end{itemize}
-
-%%==========================================================================================
-\begin{note}
-The third challenge is how to improve efficiency.
-
-To be specific,
-when the dimension of data is high,
-the candidate subspace increase dramatically,
-so that it is very easy to exceed the limit of computer resources.
-\end{note}
-%%==========================================================================================
-
-\end{slide}
-%%
-%%==========================================================================================
-
-
-\section{GOAM Algorithm}
+\section{Extensional LDL Algorithm}
 
 
 %%==========================================================================================
 %%
-\begin{slide}[toc=,bm=]{}
+\begin{slide}[toc=,bm=]{Proof of Extensional LDL Algorithm}
 
-Framework of GOAM algorithm:
 
-\bigskip
 
-\begin{figure}
-  \centering
-  \selectcolormodel{rgb}
-  \missingfigure{Testing a long text string.}
-%  \includegraphics[width=0.55\textwidth]{figures//framework1.eps}\\
-  \caption{Framework of GOAM Algorithm} \label{framework}
-\end{figure}
-
-%%==========================================================================================
-\begin{note}
-In order to tackle the above issues,
-GOAM algorithm is involved.
-
-Let's have a look at the framework of this algorithm.
-The first step is to use the histogram to represent the group features
-based on all individuals in the group.
-
-Following that,
-we utilize the earth mover distances to measure the
-outlying degree between groups.
-This is the second step:
-outlying degree scoring.
-
-The last step is to identify the outlying aspects.
-
-\end{note}
-%%==========================================================================================
 
 \end{slide}
 %%
