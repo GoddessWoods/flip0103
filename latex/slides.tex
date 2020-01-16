@@ -225,26 +225,6 @@ Valence- Arousal-Dominance Model (1994)
 \end{itemize}
 
 %%==========================================================================================
-\begin{note}
-Let me introduce two existing methods:
-Feature selection and score-and-search.
-
-For feature selection,
-the query point can be regarded as positive class and
-the rest of the data can be regarded as negative class,
-selected the features that best distinguish the two classes.
-
-The advantages of this method are easy to operate,
-and it's able to resolve dimensionality bias.
-However, it has some drawbacks.
-Firstly,
-positive and negative classes are Not balanced,
-secondly,
-it can't quantify the outlying degree correctly.
-Most importantly,
-it doesn't identify group outlying aspects.
-\end{note}
-%%==========================================================================================
 
 \end{slide}
 %%
@@ -253,73 +233,29 @@ it doesn't identify group outlying aspects.
 
 %%==========================================================================================
 %%
-\begin{slide}[toc=,bm=]{Related Work - Outlying Aspects Mining}
+\begin{slide}{Label Distribution Learning}
 
 \begin{itemize}
-\item
-Existing Methods - \textcolor{orange} {Score-and-search}
+	\item 
+	Formulation of LDL
+	
+	\begin{itemize}
+		\item 
+		The training set $ S = \{ ( x_{i} , D_{i} )  \} ˆn_{ i = 1 } $
+		\item 
+		The label distribution of $ x_{i}  $ is denoted by 
+	    $ D_{i} $ = \{ 
+	    	$ d ˆ {y_{1}} _{ x_{i} } , 
+	    	d ˆ {y_{2}} _{ x_{i} } ,...,
+	    	d ˆ {y_{c}} _{ x_{i} }  $ \}
+		
+	\end{itemize}
 
-\begin{itemize}
-\item
-Define an outlying score function.
 
-\item
-Search subspaces.
-\end{itemize}
-\bigskip
-\twocolumn[
-\savevalue{lfrheight}=5cm,
-\savevalue{lfrprop}={
-linestyle=solid,framearc=.2,linewidth=1pt},
-rfrheight=\usevalue{lfrheight},
-rfrprop=\usevalue{lfrprop}
-]{
-Disadvantages
-\begin{itemize}
-\item
-\smallskip
-Dimensionality bias.
-
-\item
-\smallskip
-Search efficiency is \textcolor{orange}{Not} high (dataset is large).
-
-\item
-\smallskip
-\textcolor{orange}{Not} identify group outlying aspects.
-\end{itemize}
-}{
-Advantages
-\begin{itemize}
-\item
-\smallskip
-Quantify the outlying degree correctly.
-
-\item
-\smallskip
-High Comprehensibility.
-
-\end{itemize}
-}
 \end{itemize}
 
 %%==========================================================================================
-\begin{note}
-For score-and-search method,
-it defines an outlying score function,
-and then searches for each subspace until it finds out a subspace that
-makes the query point show the best score.
 
-The advantages of this method are:
-first, it enables to quantify the outlying degree accurately.
-Besides, its comprehensibility is high.
-
-While the disadvantages include three main aspects:
-the first one is it has dimensionality bias;
-Additionally, its search efficiency is low.
-Last but not least, it doesn't identify group outlying aspects.
-\end{note}
-%%==========================================================================================
 
 \end{slide}
 %%
