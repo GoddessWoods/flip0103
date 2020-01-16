@@ -233,7 +233,7 @@ Valence- Arousal-Dominance Model (1994)
 
 %%==========================================================================================
 %%
-\begin{slide}{Label Distribution Learning}
+\begin{slide}{Related Work - Label Distribution Learning}
 
 \begin{itemize}
 	\item 
@@ -248,15 +248,53 @@ Valence- Arousal-Dominance Model (1994)
 	    	$ d ˆ {y_{1}} _{ x_{i} } , 
 	    	d ˆ {y_{2}} _{ x_{i} } ,...,
 	    	d ˆ {y_{c}} _{ x_{i} }  $ \}
+		and 
+		$ \sum_{y}  d^y_{x} = 1 $
+		\item 
+		The goal of LDL is to 
+		learn a conditional probability mass function 
+		$ p(y|x) $ from $ S $
+	\end{itemize}
+	
+	\item 
+	Method of LDL
+	
+	\begin{itemize}
+		\item 
+		Suppose $ p(y|x) $  is a parametric model
+		 $ p(y|x;{\theta}) $, 
+		 where $ \theta $ is the parameter vector. 
+		\item 
+		Kullback-Leibler divergence	
 		
+		$ \theta ^{\ast} = 
+		 \mathop{\arg\min}\limits_{\theta}
+		 \sum\limits_{i}
+		 \sum\limits_{j}
+		 ( d_{ x_{ i } } ˆ{ y_{ j } }
+		 \ln \dfrac{ d_{ x_{ i } } ˆ{ y_{ j } } }{ p( y_{ j } | x_{ i } ;{\theta}) }
+		 )$	
+		\item 
+		Assumes the parametric model 
+		$ p(y|x;{\theta}) $ 
+		to be the maximum entropy model	
+		
+		$ p(y|x;{\theta}) = \dfrac{1}{Z}
+		\exp ( \sum\limits_{k}
+		{\theta}_{y,k} 
+		g_{k}( \textbf{x})  ) $ 
+		
+		where $ Z = \sum _{y}
+		\sum_{k}  {\theta}_{y,k}  g_{k}( \textbf{x}) $
+		is a normalization factor,
+		$ {\theta}_{y,k} $ is an element in \textbf {$\theta$} ,
+		and $ g_{k}( \textbf{x}) $ is the \textit{k}-th feature of \textbf{ x }
 	\end{itemize}
 
-
+%%    
 \end{itemize}
 
-%%==========================================================================================
-
-
+%%=========================================================================================
 \end{slide}
 %%
 %%==========================================================================================
