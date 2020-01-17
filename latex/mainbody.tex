@@ -173,43 +173,81 @@ to find the best answer.
 
 %%==========================================================================================
 %%
-\section{Data Set}
-
-
 %\section{Preliminaries} \label{sec-preliminaries}
 
-\blindtext
+\section{Data Set}
 
-\gliMarker  %TODO: GLi Here
+Emobank corpus is composed of 
+several categories of 
+the Manually Annotated Sub-Corpus of the American National Corpus 
+and the corpus of SemEval-2007 Task 14 Affective Text. 
+MASC is already annotated on various linguistic levels. 
+SE07, on the other hand, bears annotations according to 
+Ekman’s six Basic Emotion on a [0,100] scale, respectively. 
+This collection of raw data comprises 10,548 sentences see in ~\Cref{tbl:emobank}.
 
+Use the subset MASC corpus to train the DEDL model.
+Then use this model to predict the scores of 
+Valence, Arousal and Dominance dimensional emotion
+for the sentences in the SE07 corpus.
+Organize these data into two new data sets:
+
+\begin{description}
+	\item [DATA\_1] Predicted VAD is the features and 
+	the emotion categories corresponding to 
+	the max scales of the sentences in SE07.
+	\item [DATA\_2] Annotated VAD is the features and 
+	the emotion categories corresponding to 
+	the max scales of the sentences in SE07.
+\end{description}
+
+\begin{table}[htbp]  \centering
+	\caption{Genre distribution of the raw and filtered
+		EMOBANK corpus.}
+	\label{tbl:emobank}
+	\begin{tabular}{cccc}
+		\toprule
+		Corpus & Domain  & Raw & Filtered  \\
+		\midrule
+		SE07 &  news headlines &  1250 &  1192 \\
+		\hline
+		\multirow{6}{*}{MASC} &  blogs&  1378&  1336\\
+		&  essays &  1196 &  1135 \\
+		&  fiction &  2893 &  2753 \\
+		&  letters &  1479 &  1413 \\
+		& newspapers & 1381 & 1314 \\
+		& traval guides & 971 & 919 \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+
+%%==========================================================================================
+%%
 
 \section{Method} \label{sec-method}
 
-\blindtext
-\blindlist{itemize}[3]
-\blinditemize
-\blindenumerate
+\subsection{Method One}
+\
 
-\blindmathtrue
-\blindmathfalse
-\blinddescription
-
-\sxlinMarker %TODO: QWu Here
 
 \section{Experiment and Analysis} \label{sec-experiment}
 
 
-\begin{table}  \centering
+\begin{table} [htbp] \centering
   \caption{Precision Comparison on Event Detection Methods}
   \label{tbl:overall-experiments}
   \begin{tabular}{cccc}
 \toprule
-    % after \\: \hline or \cline{col1-col2} \cline{col3-col4} ...
-    & OR Event Detection & AC Event Detection & TC Event Detection \\
+Corpus & Domain  & Raw & Filtered  \\
 \midrule
-    precision & 0.83 & 0.69 & 0.46 \\
-    recall & 0.68 & 0.48 & 0.36 \\
-    F-score & 0.747 & 0.57 & 0.4 \\
+SE07 &  news headlines &  1250 &  1192 \\
+\hline
+\multirow{6}{*}{MASC} &  blogs&  1378&  1336\\
+&  essays &  1196 &  1135 \\
+&  fiction &  2893 &  2753 \\
+&  letters &  1479 &  1413 \\
+& newspapers & 1381 & 1314 \\
+& traval guides & 971 & 919 \\
 \bottomrule
 \end{tabular}
 \end{table}
