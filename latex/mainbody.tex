@@ -51,7 +51,7 @@ the value of each element indicates the intensity of the dimensional emotions.
 We require that each vector element has a value 
 between 0 and 1 and they sum up to 1.
 
-Use Dimensional EmotionS Distribution Learning
+Use Dimensional Emotions Distribution Learning
 to predict multiple emotion dimension scores for an input text.
 Then use the predicted VAD and notational VAD to 
 do emotion classification.
@@ -228,6 +228,67 @@ Organize these data into two new data sets:
 
 \subsection{Method One}
 \
+
+One sentence contain different scores of 
+three dimensional emotions. 
+We use $ d^y_{x} $ to indicate the intensity of 
+dimensional emotion $ y $ for sentence $ x $, 
+where $ x \in \chi  $ and $ y \in Y $.
+The dimensional emotion intensity is needed to
+meet the conditions that
+$ d^y_{x} \in [0,1] $ and $\sum_{y}  d^y_{x} = 1$.
+Note that $ d^y_{x} $ denotes the proportion that 
+$ y $ accounts for in a valence, 
+arousal  and dominance dimensional emotion distribution
+of $ x $.
+
+The training set is $ S = \{ ( x_{i} , D_{i} )  \}^{n}_{i=1} $,
+where $ x_{i} \in \chi $ is a sentence embedding and
+$ D_{I} = \{d^{y_{1}}_{x_{i}},  d^{y_{2}}_{x_{i}}, ... , d^{y_{c}}_{x_{i}}\} $
+is the valence, arousal  and dominance dimensional emotion distribution.
+The goal of DEDL is to 
+learn a  conditional probability mass function $ p(y|x) $.
+Assuming that $ p(y|x) $
+is a parametric model $ p(y|x;{\theta}) $,
+where $ \theta $ is model parameter.
+
+Use the Kullback-Leibler divergence	as 
+the distance measure,
+the best parameter vector $ \theta^{\ast} $ is determined by
+~\Cref{eq:kl_divergence}.
+
+And for this problem,
+the label distribution set $ D_{i} $ is that
+$ D_{I} = \{d^{y_{v}}_{x_{i}},  d^{y_{a}}_{x_{i}}, d^{y_{d}}_{x_{i}}, d^{y_{n}}_{x_{i}}\} $,
+where
+$ d^{y_{v}}_{x_{i}} = \dfrac{score^{v}_{x_{i}}}{15} $,
+$ d^{y_{v}}_{x_{i}} = \dfrac{score^{v}_{x_{i}}}{15} $,
+$ d^{y_{v}}_{x_{i}} = \dfrac{score^{v}_{x_{i}}}{15} $,
+and $ y_{n} = 1 - y_{v}  - y_{a} - y_{d} $.
+The following we proof that 
+LDL is valid for the valence, arousal  
+and dominance dimensional emotion distribution.
+
+Assume that 
+
+\begin{equation}
+T(\theta) =
+\mathop{\arg\min}\limits_{\theta}
+\sum\limits_{i}
+\sum\limits_{j}
+(d^{y_{j}}_{ x_{ i } }
+\ln \dfrac{ d^{y_{j}}_{ x_{ i } } }{ p( y_{ j } | x_{ i } ;{\theta}) })
+\end{equation}
+
+for each step, 
+it updates the current estimate of the parameters 
+\textbf{$\theta$} to \textbf{ $\theta + \delta$},
+where \textbf{$ \delta $} minimizes a lower bound to the change in likelihood
+
+
+
+
+   
 
 
 \section{Experiment and Analysis} \label{sec-experiment}
