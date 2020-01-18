@@ -483,7 +483,7 @@ the output layer for generated classification results.
 		Transform the scores of Valence, Arousal and Dominance 
 		dimensional emotion into 
 		the label distribution 
-		$ D_{I} = \{d^{y_{v}}_{x_{i}},  d^{y_{a}}_{x_{i}}, d^{y_{d}}_{x_{i}}, d^{y_{n}}_{x_{i}}\} $,
+		$ D_{i} = \{d^{y_{v}}_{x_{i}},  d^{y_{a}}_{x_{i}}, d^{y_{d}}_{x_{i}}, d^{y_{n}}_{x_{i}}\} $,
 	\end{itemize}
 	
 	\item 
@@ -525,48 +525,74 @@ the output layer for generated classification results.
 \begin{itemize}
 	
 	\item 
-	Load data
+	Load data : The function in codes 
+	reads the dataset into a list of sentences, 
+	each sentence is a string. 
+	Here we ignore punctuation and capitalization.
 	\item 
 	Text Preprocessing
 	
 	\begin{itemize}
 		\item 
-		Tokenization : Split strings into tokens
+		Tokenization : For each sentence, 
+		we split it into a list of tokens. 
+		A token is a data point the model will train and predict. 
+		The function in code supports 
+		splitting a sentence into words or characters, 
+		and returns a list of split strings.
 		\item 
-		Vocabulary : Build a vocabulary for these tokens to map them into numerical indices.
+		Vocabulary : The vocabulary is used to 
+		map string tokens into numerical indices starting from 0. 
+		To do so, 
+		first count the unique tokens in all documents, 
+		called corpus, 
+		and then assign a numerical index to 
+		each unique token according to its frequency. 
+		Rarely appeared tokens are 
+		often removed to reduce the complexity. 
+		A token does not exist in corpus or 
+		has been removed is mapped into 
+		a special unknown (“unk”) token. 
 		\item 
-		
+		Data iterator
 	\end{itemize}
 	
 	\item 
 	Using a TextCNN or LSTM Model
 	
 	\item 
-	Loading Pre-trained Word Vectors
+	Loading Pre-trained Word Vectors :
+	Because the training dataset for 
+	sentiment classification is not very large, 
+	in order to deal with overfitting, 
+	we will directly use word vectors pre-trained on 
+	a larger corpus as the feature vectors of all words. 
+	Here, we load a 300-dimensional GloVe word vector
+	 for each word in the dictionary vocab.
 	
 	\item 
 	Training and Evaluating the Model
 	
 \end{itemize}
 
+%%==========================================================================================
+%%
+\subsection{Analysis}
+\
 
-
+From the table below
+shows the result of base models
+on DATA\_1 and DATA\_2.
 
 \begin{table} [htbp] \centering
   \caption{Precision Comparison on Event Detection Methods}
   \label{tbl:overall-experiments}
-  \begin{tabular}{cccc}
+  \begin{tabular}{cccccc}
 \toprule
-Corpus & Domain  & Raw & Filtered  \\
+ & RandomForest  & Bagging & Boosting & KNN & SVC\\
 \midrule
-SE07 &  news headlines &  1250 &  1192 \\
-\hline
-\multirow{6}{*}{MASC} &  blogs&  1378&  1336\\
-&  essays &  1196 &  1135 \\
-&  fiction &  2893 &  2753 \\
-&  letters &  1479 &  1413 \\
-& newspapers & 1381 & 1314 \\
-& traval guides & 971 & 919 \\
+DATA\_1&  0.32 &  0.30 &  0.30 & 0.31 & 0.33\\
+DATA\_2 &  0.35 &  0.34 &  0.34 & 0.30 & 0.34\\
 \bottomrule
 \end{tabular}
 \end{table}

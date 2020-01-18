@@ -96,85 +96,68 @@
 
 %%%%%%%%%% -------------------------------------------------------------------- %%%%%%%%%%
 \block{Introduction}{
-    Many real world applications call for one important function
-    of identifying the set of features
-    on which the interested object is most distinguished from others.
-    Usually,
-    this object is termed as the query object,
-    and the set of features are referred to as the \emph{subspaces} or \emph{aspects}.
-    Accordingly,
-    this research problem is referred to as
-    \emph{outlying aspects mining},
-    which is different from \emph{outlier detection}.
-  	
-  	\begin{description}
-  	\item[Outlying Aspects Mining] aims to identify a subspace
-    which makes the query object most outlying,
-    rather than verifying whether it is an outlier or not.
-    The task of \emph{Outlying Aspects Mining}
-    is to explain which aspects make the query object most different.
-  	
-  	\item[Outlier Detection] aims to identify all possible outliers in the dataset,
-    without explaining why or how they are different.
-    Hence,
-    the outlying aspects mining is also referred to
-    \emph{outlier interpretation}
-    or \emph{object explanation}.
-  	\end{description}
-
-  	In this paper,
-    we extend the task of \emph{outlying aspects mining} to the \emph{group} level,
-    formalize the research problem of \emph{group outlying aspects mining},
-    and propose a novel algorithm named GOAM to solve the
-    \emph{group outlying aspects mining} problem.
+	Emotion detection has attracted great interest 
+	in the natural language processing (NLP)
+	in the last few years.
+    affective states are generally represented 
+    using either categorical or dimensional approaches.
+    The most popular categorical approach represents is 
+    Ekman’s six basic emotions 
+    (e.g., anger, happiness, fear, sadness, disgust and surprise).
+    Dimensional models consider affective states to
+    be best described relative to a small number of
+    independent emotional dimensions 
+    (often two or three): 
+    Valence 
+    (a positive-negative scale), 
+    Arousal 
+    (a calm–excited scale)
+    and Dominance 
+    (perceived degree of control over a situation). 
+    \begin{itemize}
+    	\item Use Dimensional Emotions Distribution Learning
+    	to predict multiple emotion dimension scores for an input text.
+    	Then use the predicted VAD and notational VAD to 
+    	do emotion classification.
+    	\item Use TextCNN and LSTM netural network to 
+    	do emotion classification.
+    \end{itemize}
 }
 %%%%%%%%%% -------------------------------------------------------------------- %%%%%%%%%%
 
 
 %%%%%%%%%% -------------------------------------------------------------------- %%%%%%%%%%
-\block{Group Outlying Aspects Mining}{
-\begin{itemize}
-    \item
-    %\emph{Group Outlying Aspects Mining}
-    It aims to \emph{identify a subset of aspects (or subspace)
-    which makes the query group, rather than the single object,
-    obviously different}.
-    What we are interested in the task of \emph{group outlying aspects mining}
-    is to explain which aspects make the query group distinctive
-    different from the other groups.
-
-    \item
-    \emph{Group Outlying Aspects Mining},
-    \emph{Outlying Aspects Mining} and
-    \emph{Outlier Detection} are different with each other.
-\end{itemize}
+\block{Data Set}{
+Emobank corpus is composed of 
+several categories of 
+the Manually Annotated Sub-Corpus of the American National Corpus 
+and the corpus of SemEval-2007 Task 14 Affective Text. 
+MASC is already annotated on various linguistic levels. 
+SE07, on the other hand, bears annotations according to 
+Ekman’s six Basic Emotion on a [0,100] scale, respectively. 
+Emobank contains 10,548 texts annotated with
+Valence, Arousal and Dominance 
+dimensional emotion scores, 
+ranged from 1.0 to 5.0.
 
 \begin{center}
-    \begin{minipage}{0.3\linewidth}
-    \centering
-    \begin{tikzfigure}
-    \missingfigure[figcolor=white]{Testing figcolor}
-    {\small{Group Outlying Aspects Mining}}
-    \end{tikzfigure}%
-    \end{minipage}
-    \hfill
-    \begin{minipage}{0.3\linewidth}
-    \centering
-    \begin{tikzfigure}
-    \missingfigure[figcolor=white]{Testing figcolor}
-    {\small{Outlying Aspects Mining}}
-    \end{tikzfigure}%
-    \end{minipage}
-    \hfill
-    \begin{minipage}{0.3\linewidth}
-    \centering
-    \begin{tikzfigure}
-    \missingfigure[figcolor=white]{Testing figcolor}
-    {\small{Outlier Detection}}
-    \end{tikzfigure}%
-    \end{minipage}
+	\begin{tabular}{cccc}
+		\toprule
+		Corpus & Domain  & Raw & Filtered  \\
+		\midrule
+		SE07 &  news headlines &  1250 &  1192 \\
+		\hline
+		&  blogs&  1378&  1336\\
+		&  essays &  1196 &  1135 \\
+		MASC&  fiction &  2893 &  2753 \\
+		&  letters &  1479 &  1413 \\
+		& newspapers & 1381 & 1314 \\
+		& traval guides & 971 & 919 \\
+		\bottomrule
+	\end{tabular}
 \end{center}
 }
+
 %%%%%%%%%% -------------------------------------------------------------------- %%%%%%%%%%
 
 
@@ -189,65 +172,71 @@
 
 
 %%%%%%%%%% -------------------------------------------------------------------- %%%%%%%%%%
-\block{GOAM Algorithm}{
-  	We propose the \emph{GOAM} algorithm to solve the research problem of
-    \emph{Group Outlying Aspects Mining}.
-  	The \emph{GOAM} algorithm includes three major steps.
-%    1) Group Feature Extraction,
-%    2) Outlying Degree Scoring, and
-%    3) Outlying Aspects Identification.
+\block{DELD Algorithm}{
+  	One sentence contain different scores of 
+  	three dimensional emotions. 
+  	We use $ d^y_{x} $ to indicate the intensity of 
+  	dimensional emotion $ y $ for sentence $ x $, 
+  	where $ x \in \chi  $ and $ y \in Y $.
+  	The dimensional emotion intensity is needed to
+  	meet the conditions that
+  	$ d^y_{x} \in [0,1] $ and $\sum_{y}  d^y_{x} = 1$.
   	
-\begin{tikzfigure}%[Overall architecture of \emph{GOAM} algorithm]
-%  \includegraphics[width=0.8\linewidth]{figures//framework.pdf}
-    \missingfigure[figcolor=white]{Testing figcolor}
-\end{tikzfigure}
-		
-\begin{description}
-  	\item[Group Feature Extraction]
-  	Let $f_1$, $f_2$, $f_3$ represent three features of $G_q$.
-    We count the frequency of each value for one feature.
-    Then use the histogram to represent each feature.
-    Similarly,
-    we can extract other features for each group.
+  	Note that $ d^y_{x} $ denotes the proportion that 
+  	$ y $ accounts for in a valence, 
+  	arousal  and dominance dimensional emotion distribution
+  	of $ x $.
+  	
+  	The training set is $ S = \{ ( x_{i} , D_{i} )  \}^{n}_{i=1} $,
+  	where $ x_{i} \in \chi $ is a sentence embedding and
+  	$ D_{i} = \{d^{y_{1}}_{x_{i}},  d^{y_{2}}_{x_{i}}, ... , d^{y_{c}}_{x_{i}}\} $
+  	is the valence, arousal  and dominance dimensional emotion distribution.
+  	The goal of DEDL is to 
+  	learn a  conditional probability mass function $ p(y|x) $.
+  	Assuming that $ p(y|x) $
+  	is a parametric model $ p(y|x;{\theta}) $,
+  	where $ \theta $ is model parameter.
+  	
+  	Use the Kullback-Leibler divergence	as 
+  	the distance measure,
+  	the best parameter vector $ \theta^{\ast} $ is determined by
+  	
+  	\begin{equation}\label{eq:kl_divergence}
+  	\theta^{\ast} =
+  	\mathop{\arg\min}\limits_{\theta}
+  	\sum\limits_{i}
+  	\sum\limits_{j}
+  	(d^{y_{j}}_{ x_{ i } }
+  	\ln \dfrac{ d^{y_{j}}_{ x_{ i } } }{ p( y_{ j } | x_{ i } ;{\theta}) })
+  	\end{equation}
+  	
+  	Assumes the parametric model 
+  	$ p(y|x;{\theta}) $ 
+  	to be the maximum entropy model	
+  	\begin{equation}
+  		 p(y|x;{\theta}) = \dfrac{1}{Z}
+  		\exp ( \sum\limits_{k}
+  		{\theta}_{y,k} 
+  		g_{k}( \textbf{x})  ) 
+  	\end{equation}
+  	
+  	where $ Z = \sum _{y}
+  	\sum_{k}  {\theta}_{y,k}  g_{k}( \textbf{x}) $
+  	is a normalization factor,
+  	$ {\theta}_{y,k} $ is an element in \textbf {$\theta$} ,
+  	and $ g_{k}( \textbf{x}) $ is the \textit{k}-th feature of \textbf{ x }
+  	
+  	And for this problem,
+  	the label distribution set $ D_{i} $ is that
+  	$ D_{I} = \{d^{y_{v}}_{x_{i}},  d^{y_{a}}_{x_{i}}, d^{y_{d}}_{x_{i}}, d^{y_{n}}_{x_{i}}\} $,
+  	where
+  	$ d^{y_{v}}_{x_{i}} = \dfrac{score^{v}_{x_{i}}}{15} $,
+  	$ d^{y_{v}}_{x_{i}} = \dfrac{score^{v}_{x_{i}}}{15} $,
+  	$ d^{y_{v}}_{x_{i}} = \dfrac{score^{v}_{x_{i}}}{15} $,
+  	and $ y_{n} = 1 - y_{v}  - y_{a} - y_{d} $.
 
-%    \item
-%    The histogram of $G_q$ on three features are as follows.
-\end{description}
 
-\begin{center}
-    \begin{minipage}{0.3\linewidth}
-    \centering
-    \begin{tikzfigure}
-    \missingfigure[figcolor=white]{Testing figcolor}
-    {\small{Histogram of $G_q$ on $f_1$}}
-    \end{tikzfigure}%
-    \end{minipage}
-    \hfill
-    \begin{minipage}{0.3\linewidth}
-    \centering
-    \begin{tikzfigure}
-    \missingfigure[figcolor=white]{Testing figcolor}
-    {\small{Histogram of $G_q$ on $f_2$}}
-    \end{tikzfigure}%
-    \end{minipage}
-    \hfill
-    \begin{minipage}{0.3\linewidth}
-    \centering
-    \begin{tikzfigure}
-    \missingfigure[figcolor=white]{Testing figcolor}
-    {\small{Histogram of $G_q$ on $f_3$}}
-    \end{tikzfigure}%
-    \end{minipage}
-\end{center}
-\begin{description}
-\item[Outlying Degree Scoring]
-    In this step,
-    we first calculate the \emph{earth mover distance} (EMD) of one feature among different groups.
-    The earth mover distance reflects the minimum mean distance
-    between groups on one feature.
-    So,
-    we utilize the EMD to measure the difference between groups of each feature.
-\end{description}
+\
 }
 %%%%%%%%%% -------------------------------------------------------------------- %%%%%%%%%%
 
@@ -257,36 +246,48 @@
  %Second column with first block's top edge aligned with with previous column's top.
 
 %%%%%%%%%% -------------------------------------------------------------------- %%%%%%%%%%
-\block{GOAM Algorithm}{
-\begin{description}
-    \item
-    Second,
-    based on the \emph{earth move distance},
-    we calculate the outlying degree.
-\end{description}
+\block{TextCNN}{
+The textCNN model mainly uses 
+a one-dimensional convolutional layer and 
+a max-over-time pooling layer. 
+Assume that 
+the input text sequence consists of $ n $ words, 
+and each word is represented by 
+a $ d  $dimensional word vector. 
+Then the width of the input sample is$  n $, 
+the height is 1, 
+and the number of input channels is $ d $. 
+The calculation of textCNN is mainly divided into the following steps.
 
-\begin{tikzfigure}%[Overall architecture of \emph{GOAM} algorithm]
-    \missingfigure[figcolor=white]{Testing figcolor}
-\end{tikzfigure}
-  where $G_q$ is the query group,
-  $n$ is the number of compare groups,
-  and $h_{k_s}$ is the histogram representation of $G_k$ in the subspace $s$.
-
-\begin{description}
-  	\item[Outlying Aspects Identification]
-    In this step,
-    based on the value of outlying degree
-    we will identify the group outlying aspects.
-    If a feature's outlying degree is greater than a threshold,
-    the more likely the feature is group outlying aspect.
-    When the dimensionality of features is high,
-    we adopt a stage-wise candidate subspace construction strategy to
-    alleviate the exponential explosion.
-\end{description}
+\begin{itemize}
+	\item 
+	Define multiple one-dimensional convolution kernels, 
+	and use these convolution kernels to 
+	perform convolution calculations on the inputs. 
+	\item 
+	All the channels of the output are individually pooled 
+	in max-over-time pooling, 
+	and the pooled output values of 
+	these channels are connected into a vector.
+	\item 
+	The fully connected layer transforms 
+	the connected vectors into outputs for each class. 
+	This step can use the dropout layer to deal with overfitting.
+\end{itemize}
 }
 %%%%%%%%%% -------------------------------------------------------------------- %%%%%%%%%%
 % Second column - first block
-
+\block{LSTM}{
+	In the code I implement 
+	\begin{itemize}
+		\item 
+		the Embedding instance is the embedding layer
+		\item 
+		the LSTM instance is the hidden layer of sequence encoding
+		\item 
+		the Linear instance is the output layer that generates the classification results
+	\end{itemize}
+}
 
 %%%%%%%%%% -------------------------------------------------------------------- %%%%%%%%%%
 \block[titleleft]{Experiment}
