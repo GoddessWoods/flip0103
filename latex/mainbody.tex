@@ -324,11 +324,232 @@ So the EDLD is valid.
 
 \subsection{Method Two}
 
+\subsubsection{TextCNN}
+\
+
+TextCNN mainly uses 
+a one-dimensional convolutional layer and 
+max-over-time pooling layer. 
+Suppose the input text sequence consists of $ n $ words, 
+and each word is 
+represented by a $ d $-dimension word vector. 
+Then the input example has a width of $ n $,
+a height of  1, and $ d $ input channels. 
+The calculation of textCNN can 
+be mainly divided into the following steps:
+
+\begin{itemize}
+	\item 
+	Define multiple one-dimensional convolution kernels 
+	and use them to 
+	perform convolution calculations on the inputs. 
+	Convolution kernels with different widths may 
+	capture the correlation of different numbers of adjacent words.
+	\item 
+	Perform max-over-time pooling 
+	on all output channels, 
+	and then concatenate the pooling output values of 
+	these channels in a vector.
+	\item 
+	The concatenated vector is 
+	transformed into the output for 
+	each category through the fully connected layer. 
+	A dropout layer can be used in 
+	this step to deal with overfitting.
+\end{itemize}
+
+\Cref{fig:cnn}gives an example to illustrate the textCNN.
+The input here is a sentence with 11 words, 
+with each word represented by 
+a 6-dimensional word vector. 
+Therefore, 
+the input sequence has 
+a width of 11 and 6 input channels. 
+We assume there are 
+two one-dimensional convolution kernels 
+with widths of 2 and 4, 
+and 4 and 5 output channels, 
+respectively. 
+Therefore, 
+after one-dimensional convolution calculation, 
+the width of the four output channels is  $ 11-2+1=10 $,
+while the width of the other five channels is  $ 11-4+1=8 $. 
+Even though the width of each channel is different, 
+we can still perform max-over-time pooling for 
+each channel and concatenate the pooling outputs of 
+the 9 channels into a 9-dimensional vector. 
+Finally, 
+we use a fully connected layer to 
+transform the 9-dimensional vector 
+into a 2-dimensional output: 
+positive sentiment and negative sentiment predictions.
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[height=5cm,width=8cm]{figures/textCNN_en.eps}
+	\caption{The emotional space spanned by the Valence-Arousal model}\label{fig:cnn}
+\end{figure}
+
+%%==========================================================================================
+%%
+\subsubsection{LSTM}
+\
+
+The challenge to 
+address long-term information preservation 
+and short-term input skipping 
+in latent variable models 
+has existed for a long time. 
+One of the earliest approaches to 
+address this was the LSTM. 
+It shares many of 
+the properties of the Gated Recurrent Unit. 
+
+Arguably it is inspired by 
+logic gates of a computer. 
+To control a memory cell 
+we need a number of gates. 
+One gate is needed to 
+read out the entries from the cell 
+(as opposed to reading any other cell). 
+We will refer to this as the output gate. 
+A second gate is needed to 
+decide when to read data into the cell. 
+We refer to this as the input gate. 
+Last, 
+we need a mechanism to 
+reset the contents of the cell, 
+governed by a forget gate. 
+The motivation for 
+such a design is the same as before, 
+namely to be able to decide 
+when to remember and 
+when to ignore inputs 
+in the latent state 
+via a dedicated mechanism. 
+The structure of LSTM is showed in \Cref{fig:lstm}.
+
+In this model, 
+each word first obtains a feature vector 
+from the embedding layer. 
+Then, 
+we further encode the feature sequence using 
+a bidirectional recurrent neural network to 
+obtain sequence information. 
+Finally, 
+we transform 
+the encoded sequence information to 
+output through the fully connected layer. 
+Specifically, 
+we can concatenate hidden states of 
+bidirectional long-short term memory 
+in the initial timestep and final timestep 
+and pass it to the output layer classification 
+as encoded feature sequence information. 
+In the BiRNN class implemented below, 
+the Embedding instance is 
+the embedding layer, 
+the LSTM instance is 
+the hidden layer for sequence encoding, 
+and the ,Linear instance is 
+the output layer for generated classification results.
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[height=4cm,width=7cm]{figures/lstm_en.eps}
+	\caption{The emotional space spanned by the Valence-Arousal model}\label{fig:lstm}
+\end{figure}
 
 
-
+%%==========================================================================================
+%%
 
 \section{Experiment and Analysis} \label{sec-experiment}
+
+\subsection{Experiment}
+
+\subsubsection{Experiment One}
+\
+
+\begin{itemize}
+	\item
+	Data Processing
+	
+	\begin{itemize}
+		\item 
+		Use Bert to train the sentence encoding/embedding
+		of Emobank corpus, that is the feature vectors $ x_{i} $
+		\item 
+		Transform the scores of Valence, Arousal and Dominance 
+		dimensional emotion into 
+		the label distribution 
+		$ D_{I} = \{d^{y_{v}}_{x_{i}},  d^{y_{a}}_{x_{i}}, d^{y_{d}}_{x_{i}}, d^{y_{n}}_{x_{i}}\} $,
+	\end{itemize}
+	
+	\item 
+	Predict the scores of 
+	Valence, Arousal and Dominance dimensional emotion
+	through the EDLD
+	for the sentences in the SE07 corpus.
+	
+	\item 
+	New Data Set
+	
+	\begin{itemize}
+		\item 
+		DATASET_1 : predicted VAD is the features and 
+		the emotion categories corresponding to 
+		the max scales of the sentences in SE07.
+		\item 
+		DATASET_2 : Annotated VAD is the features and 
+		the emotion categories corresponding to 
+		the max scales of the sentences in SE07.
+	\end{itemize}
+	
+	\item 
+	Algorithm
+	
+	\begin{itemize}
+		\item DecisionTree, KNeighbors, LogisticRegression and so on.
+		
+	\end{itemize}
+\end{itemize}
+
+
+%%==========================================================================================
+%%
+
+\subsubsection{Experiment Two}
+\
+
+\begin{itemize}
+	
+	\item 
+	Load data
+	\item 
+	Text Preprocessing
+	
+	\begin{itemize}
+		\item 
+		Tokenization : Split strings into tokens
+		\item 
+		Vocabulary : Build a vocabulary for these tokens to map them into numerical indices.
+		\item 
+		
+	\end{itemize}
+	
+	\item 
+	Using a TextCNN or LSTM Model
+	
+	\item 
+	Loading Pre-trained Word Vectors
+	
+	\item 
+	Training and Evaluating the Model
+	
+\end{itemize}
+
+
 
 
 \begin{table} [htbp] \centering
@@ -350,6 +571,9 @@ SE07 &  news headlines &  1250 &  1192 \\
 \end{tabular}
 \end{table}
 
+
+%%==========================================================================================
+%%
 
 \section{Conclusions} \label{sec-conclusions}
 
