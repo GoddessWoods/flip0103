@@ -280,15 +280,52 @@ T(\theta) =
 \ln \dfrac{ d^{y_{j}}_{ x_{ i } } }{ p( y_{ j } | x_{ i } ;{\theta}) })
 \end{equation}
 
-for each step, 
+and $ p( y_{ j } | x_{ i } ;{\theta}) $ is the~\Cref{eq:max_entropy}. 
+For each step, 
 it updates the current estimate of the parameters 
 \textbf{$\theta$} to \textbf{ $\theta + \delta$},
 where \textbf{$ \delta $} minimizes a lower bound to the change in likelihood
 
+\begin{equation}\label{eq:update}
+T(\theta + \delta) - T(\theta) =
+\sum\limits_{ij} d^{y_{j}}_{ x_{ i } } ( \ln p(y_{j}|x_{i};{\theta}) - \ln p(y_{j}|x_{i};{\theta +\delta})
+\end{equation}
 
+As for the Root Mean Square Error,
+the goal is 
+$ \mathop{\min}\sum\limits_{ij} ( d^{y_{j}}_{ x_{ i } } -  p(y_{j}|x_{i};{\theta}))^{2}$
+which is equal to
 
+\begin{equation}\label{eq:rmse}
+	R(\theta) = \mathop{\min} \sum\limits_{ij}
+	|d^{y_{j}}_{ x_{ i } } -  p(y_{j}|x_{i};{\theta})|
+\end{equation}
 
+for each update,
+
+\begin{equation}\label{eq:rmse'}
+	R(\theta + \delta) - R(\theta) \leq 
+	\sum\limits_{ij} |
+	d^{y_{j}}_{ x_{ i } }  - 
+	p(y_{j}|x_{i};{\theta + \delta}) - 
+	(d^{y_{j}}_{ x_{ i } }  - 
+	p(y_{j}|x_{i};{\theta})) | =
+	\sum\limits_{ij}
+	|  \ln p(y_{j}|x_{i};{\theta}) - \ln p(y_{j}|x_{i};{\theta +\delta} |
+\end{equation}
+
+From the ˜\Cref{eq:update} and ˜\Cref{eq:rmse'}, 
+we can find that the goals of EDLD and  RMSE
+when the $ \theta $ updates are the same.
+So the EDLD is valid.
    
+%%==========================================================================================
+%%
+
+\subsection{Method Two}
+
+
+
 
 
 \section{Experiment and Analysis} \label{sec-experiment}
@@ -316,7 +353,7 @@ SE07 &  news headlines &  1250 &  1192 \\
 
 \section{Conclusions} \label{sec-conclusions}
 
-\blindtext
+
 
 \section*{Acknowledgment}
 
