@@ -178,7 +178,7 @@ cf={Group Outlying Aspects Mining},
 				and Dominance 
 				(perceived degree of control over a situation). 
 				\begin{itemize}
-					\item Use Label Distribution Learning
+					\item Use Dimensional Emotion Distribution Learning
 					to predict multiple emotion dimension scores for an input text.
 					Then use the predicted VAD and notational VAD to 
 					do emotion classification.
@@ -643,7 +643,7 @@ T: The number of test data set}
 %%
 %%==========================================================================================
 
-\begin{slide}{Results}
+\begin{slide}[toc=,bm=]{Results}
 	
 	\begin{table}[tb]
 		\setlength{\abovecaptionskip}{0pt}
@@ -672,7 +672,7 @@ T: The number of test data set}
 			& acc_train  & acc_test & loss_train & loss_test \\
 			\midrule
 			TextCNN&  0.64 &  0.33 &  1.24 & 1.67 \\
-			LSTM &  0.35 &  0.34 &  0.34 & 0.30 \\
+			LSTM &  0.28 &  0.22 &  1.76 & 1.78 \\
 			\bottomrule
 		\end{tabular}
 	\end{table}
@@ -682,12 +682,16 @@ T: The number of test data set}
 %%
 %%==========================================================================================
 
-\begin{slide}{Result}
+\begin{slide}[toc=,bm=]{Results}
 	\begin{center}
-		\includegraphics[width=.4\linewidth,height=.3\linewidth]{figures/cnn_acc.eps}
-		\quad\includegraphics[width=.4\linewidth,height=.3\linewidth]{figures/cnn_loss.eps}
+		\includegraphics[width=.4\linewidth,height=.25\linewidth]{figures/cnn_acc.eps}
+		\quad\includegraphics[width=.4\linewidth,height=.25\linewidth]{figures/cnn_loss.eps}
 	\end{center}
 	
+	\begin{center}
+		\includegraphics[width=.4\linewidth,height=.25\linewidth]{figures/lstm_acc.eps}
+		\quad\includegraphics[width=.4\linewidth,height=.25\linewidth]{figures/lstm_loss.eps}
+	\end{center}
 	
 \end{slide}
 %%
@@ -721,6 +725,10 @@ T: The number of test data set}
 	Neural network parameters need to be adjusted
 \end{itemize}
 
+\begin{figure}
+	\includegraphics[width=.4\linewidth]{figures/1.eps}
+	\caption{DIfferent sentences' emotions in VAD}
+\end{figure}
 
 \end{slide}
 %%
@@ -729,44 +737,33 @@ T: The number of test data set}
 
 %%==========================================================================================
 %
-\begin{slide}[toc=,bm=]{Questions?}
-\begin{center}
-\begin{figure}
-    \animategraphics[autoplay, loop, height=0.4\textheight]{5}{figures//gif//question//q_}{1}{30}
-\end{figure}
-\end{center}
-\end{slide}
+
 %%
 %%==========================================================================================
-
+\begin{wideslide}[toc=,bm=]{}
+	\centering
+	\vspace{\stretch{1}}
+	\twocolumn[
+	lcolwidth=0.35\linewidth,
+	rcolwidth=0.65\linewidth
+	]
+	{
+		% \centerline{\includegraphics[scale=.2]{tulip-logo.eps}}
+	}
+	{
+		\vspace{\stretch{1}}
+		
+		
+		\textcolor{black}{\scalebox{2.0}{Thank you \& Question}}
+		
+		
+	}
+	\vspace{\stretch{1}}
+\end{wideslide}
 
 %%==========================================================================================
 % TODO: Contact Page
-\begin{wideslide}[toc=,bm=]{Contact Information}
-\centering
-\vspace{\stretch{1}}
-\twocolumn[
-lcolwidth=0.35\linewidth,
-rcolwidth=0.65\linewidth
-]
-{
-% \centerline{\includegraphics[scale=.2]{tulip-logo.eps}}
-}
-{
-\vspace{\stretch{1}}
-Associate Professor Gang Li\\
-School of Information Technology\\
-Deakin University, Australia
-\begin{description}
- \item[\textcolor{orange}{\faEnvelope}] \href{mailto:gangli@tulip.org.au}
- {\textsc{\footnotesize{gangli@tulip.org.au}}}
 
- \item[\textcolor{orange}{\faHome}] \href{http://www.tulip.org.au}
- {\textsc{\footnotesize{Team for Universal Learning and Intelligent Processing}}}
-\end{description}
-}
-\vspace{\stretch{1}}
-\end{wideslide}
 
 \end{document}
 

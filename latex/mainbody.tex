@@ -75,7 +75,7 @@ we will use the Deep Learning to do emotion classifiction.
 %%==========================================================================================
 %%
 
-\section{Related Work}
+\section{Preliminary}
 
 \subsection{Emotion Frameworks}
 \
@@ -597,49 +597,84 @@ DATA\_2 &  0.35 &  0.34 &  0.34 & 0.30 & 0.34\\
 \end{tabular}
 \end{table}
 
-The following table shows that
+The following table \cref{tbl:exp_two} shows that
 the accuracy and the loss of 
 the TextCNN and LSTM network.
+And the \Cref{fig:cnn_reuslt} and 
+\Cref{fig:lstm_reuslt} present the 
+process of training in 
+TextCNN and LSTM network.
+
 
 \begin{table} [htbp] \centering
 	\caption{The result of the expriment two}
-	\label{tbl:overall-experiments}
+	\label{tbl:exp_two}
 	\begin{tabular}{ccccc}
 	\toprule
 	& acc_train  & acc_test & loss_train & loss_test \\
 	\midrule
 	TextCNN&  0.64 &  0.33 &  1.24 & 1.67 \\
-	LSTM &  0.35 &  0.34 &  0.34 & 0.30 \\
+	LSTM &  0.28 &  0.22 &  1.76 & 1.78 \\
 	\bottomrule
 	\end{tabular}
 \end{table}
 
+\begin{figure}[htbp]
+	\centering
+	\label{fig:cnn_reuslt}
+	\begin{minipage}[c]{0.5\textwidth}
+		\centering
+		\includegraphics[height=4.5cm,width=7cm]{figures/cnn_loss.eps}
+	\end{minipage}%
+	\begin{minipage}[c]{0.5\textwidth}
+		\centering
+		\includegraphics[height=4.5cm,width=7cm]{figures/cnn_acc.eps}
+	\end{minipage}
+	\caption{The result of TextCNN}
+\end{figure}
 
+\begin{figure}[htbp]
+	\centering
+	\label{fig:lstm_reuslt}
+	\begin{minipage}[c]{0.5\textwidth}
+		\centering
+		\includegraphics[height=4.5cm,width=7cm]{figures/lstm_loss.eps}
+	\end{minipage}%
+	\begin{minipage}[c]{0.5\textwidth}
+		\centering
+		\includegraphics[height=4.5cm,width=7cm]{figures/lstm_acc.eps}
+	\end{minipage}
+	\caption{The result of TextCNN}
+\end{figure}
 
 %%==========================================================================================
 %%
 
 \section{Conclusions} \label{sec-conclusions}
-
-\begin{itemize}
-	\item
-	\smallskip
+\
+	
 	There is not much difference between 
 	the values of Valence, Arousal and Dominance 
 	dimensional emotions scores predicted by EDLD
 	and the labeled VAD.
+	But the result of
+	emotion classification is
+	not very good.
+	May it's not suitable to
+	use the values of Valence, Arousal and Dominance 
+	dimensional emotions to
+	do emotion classification.
+	Look at the \Cref{fig:1}
 	
-	\smallskip
 	
-	\item
-	\smallskip
-	
-	
-	\item
-	\smallskip
-	Neural network parameters need to be adjusted
-\end{itemize}
+	Neural network parameters need to be adjusted,
+	and the result will be more better.
 
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[height=5cm,width=8cm]{figures/1.eps}
+	\caption{DIfferent sentences' emotions in VAD}\label{fig:1}
+\end{figure}
 
 \section*{Acknowledgment}
 
