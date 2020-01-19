@@ -53,10 +53,9 @@
 \colorlet{backgroundcolor}{blue!10}
 
  % Title, Author, Institute
-\title{Group Outlying Aspects Mining}
-\author{Shaoni Wang$^1$, Gang Li$^2$}
-\institute{$^1$ Xi'an Shiyou University, China \\
-	$^2$ Deakin University, Australia
+\title{Flip0103 Final Project}
+\author{Shuxia Lin}
+\institute{ SouthEast University, China \\
 }
 %\titlegraphic{logos/tulip-logo.eps}
 
@@ -182,15 +181,14 @@ ranged from 1.0 to 5.0.
   	meet the conditions that
   	$ d^y_{x} \in [0,1] $ and $\sum_{y}  d^y_{x} = 1$.
   	
-  	Note that $ d^y_{x} $ denotes the proportion that 
-  	$ y $ accounts for in a valence, 
-  	arousal  and dominance dimensional emotion distribution
-  	of $ x $.
-  	
   	The training set is $ S = \{ ( x_{i} , D_{i} )  \}^{n}_{i=1} $,
-  	where $ x_{i} \in \chi $ is a sentence embedding and
-  	$ D_{i} = \{d^{y_{1}}_{x_{i}},  d^{y_{2}}_{x_{i}}, ... , d^{y_{c}}_{x_{i}}\} $
-  	is the valence, arousal  and dominance dimensional emotion distribution.
+  	the label distribution set $ D_{i} $ is that
+  	$ D_{I} = \{d^{y_{v}}_{x_{i}},  d^{y_{a}}_{x_{i}}, d^{y_{d}}_{x_{i}}, d^{y_{n}}_{x_{i}}\} $,
+  	where
+  	$ d^{y_{v}}_{x_{i}} = \dfrac{score^{v}_{x_{i}}}{15} $,
+  	$ d^{y_{v}}_{x_{i}} = \dfrac{score^{v}_{x_{i}}}{15} $,
+  	$ d^{y_{v}}_{x_{i}} = \dfrac{score^{v}_{x_{i}}}{15} $,
+  	and $ y_{n} = 1 - y_{v}  - y_{a} - y_{d} $.
   	The goal of DEDL is to 
   	learn a  conditional probability mass function $ p(y|x) $.
   	Assuming that $ p(y|x) $
@@ -225,18 +223,14 @@ ranged from 1.0 to 5.0.
   	is a normalization factor,
   	$ {\theta}_{y,k} $ is an element in \textbf {$\theta$} ,
   	and $ g_{k}( \textbf{x}) $ is the \textit{k}-th feature of \textbf{ x }
-  	
-  	And for this problem,
-  	the label distribution set $ D_{i} $ is that
-  	$ D_{I} = \{d^{y_{v}}_{x_{i}},  d^{y_{a}}_{x_{i}}, d^{y_{d}}_{x_{i}}, d^{y_{n}}_{x_{i}}\} $,
-  	where
-  	$ d^{y_{v}}_{x_{i}} = \dfrac{score^{v}_{x_{i}}}{15} $,
-  	$ d^{y_{v}}_{x_{i}} = \dfrac{score^{v}_{x_{i}}}{15} $,
-  	$ d^{y_{v}}_{x_{i}} = \dfrac{score^{v}_{x_{i}}}{15} $,
-  	and $ y_{n} = 1 - y_{v}  - y_{a} - y_{d} $.
-
-
+  
 \
+}
+
+\block{TextCNN}{
+	The textCNN model mainly uses 
+	a one-dimensional convolutional layer and 
+	a max-over-time pooling layer. 
 }
 %%%%%%%%%% -------------------------------------------------------------------- %%%%%%%%%%
 
@@ -247,9 +241,6 @@ ranged from 1.0 to 5.0.
 
 %%%%%%%%%% -------------------------------------------------------------------- %%%%%%%%%%
 \block{TextCNN}{
-The textCNN model mainly uses 
-a one-dimensional convolutional layer and 
-a max-over-time pooling layer. 
 Assume that 
 the input text sequence consists of $ n $ words, 
 and each word is represented by 
@@ -278,6 +269,16 @@ The calculation of textCNN is mainly divided into the following steps.
 %%%%%%%%%% -------------------------------------------------------------------- %%%%%%%%%%
 % Second column - first block
 \block{LSTM}{
+	Each word first obtains a feature vector 
+	from the embedding layer. 
+	Then, 
+	we further encode the feature sequence using 
+	a bidirectional recurrent neural network to 
+	obtain sequence information. 
+	Finally, 
+	we transform 
+	the encoded sequence information to 
+	output through the fully connected layer. 
 	In the code I implement 
 	\begin{itemize}
 		\item 
@@ -292,94 +293,91 @@ The calculation of textCNN is mainly divided into the following steps.
 %%%%%%%%%% -------------------------------------------------------------------- %%%%%%%%%%
 \block[titleleft]{Experiment}
 {
-\begin{description}
-  	\item[Synthetic Dataset] contains $10$ groups and $8$ features.
-    Each group consists of $10$ members,
-    and each member has $8$ features.
-\end{description}
-\vspace{.5cm}
-\begin{tabular}{ c | c | c | c }
-    \toprule
-    Method     &  Truth Outlying Aspects    & Identified Aspects & Accuracy      \\
-    \midrule
-    GOAM       &  $\{F_1\}$, $\{F_2F_4\}$   &  $\{F_1\}$, $\{F_2F_4\}$    & 100\%    \\
+\begin{itemize}
+	\item 
+	Experiment One
+	\begin{itemize}
+		\item 
+		Use Bert to train the sentence encoding/embedding
+		of Emobank corpus, that is the feature vectors $ x_{i} $
+		\item 
+		Transform the scores of Valence, Arousal and Dominance 
+		dimensional emotion into 
+		the label distribution 
+		$ D_{i} $ = \{ 
+		$ d ˆ {y_{v}} _{ x_{i} } , 
+		d ˆ {y_{a}} _{ x_{i} } ,
+		d ˆ {y_{d}} _{ x_{i} } ,
+		d ˆ {y_{n}} _{ x_{i} }  $ \}
+		\item 
+		Predict the scores of 
+		Valence, Arousal and Dominance dimensional emotion
+		through the EDLD
+		for the sentences in the SE07 corpus.
+		\item 
+		Algorithm : DecisionTree, KNeighbors, LogisticRegression and so on.
+	\end{itemize}
+	
+	\item
+	Experiment Two
+	\begin{itemize}
+		
+		\item 
+		Load data
+		\item 
+		Text Preprocessing
+		\item 
+		Using a TextCNN or LSTM Model
+		\item 
+		Training and Evaluating the Model
+		
+	\end{itemize}
+\end{itemize}
 
-     Arithmetic Mean based OAM &  $\{F_1\}$, $\{F_2F_4\}$   &  $\{F_4\}$, $\{F_2\}$    &  0\% \\
-
-     Median based OAM &  $\{F_1\}$, $\{F_2F_4\}$   &  $\{F_2\}$, $\{F_4\}$    &           0\% \\
-     \bottomrule
-\end{tabular}
-\vspace{.2cm}
-\begin{description}
-    \item
-    It can be observed that the GOAM method can identify the trivial outlying features
-    and non-trivial outlying subspaces correctly and is obvious from the table
-    that the accuracy of GOAM is the best, which is ($100\%$).
-\end{description}
-
-\begin{description}
-\item[NBA Dataset] was collected from Yahoo Sports
-website (\url{http://sports.yahoo.com.cn/nba}).
-The data include all teams from the six divisions,
-and each player in the team has $12$ features.
-\end{description}
-\vspace{.5cm}
-\begin{tabular}{ c | c | c }
-    \toprule
-    Teams                   & Trivial Outlying Aspects  & NonTrivial Outlying Aspects    \\
-    \toprule
-    Cleveland Cavaliers     & \{3FA\}                   & \{FGA, FT\%\}, \{FGA, FG\%\} \\
-    Orlando Magic           & \{Stl\}                   & None                         \\
-    Milwaukee Bucks         & \{To\}, \{FTA\}           & \{FGA, FTA\}, \{3FA, FTA\}     \\
-%    Golden State Warriors   & \{FG\%\}                  & \{FT\%, Blk\}, \{FGA, 3PT\%, FTA\}\\
-%    Utah Jazz               & \{Blk\}                   & \{3FA, 3PT\%\}                    \\
-    New Orleans Pelicans    & \{FT\%\}, \{FTA\}         & \{FTA, Stl\}, \{FTA, To\}          \\
-    \bottomrule
-\end{tabular}
-           
-\begin{minipage}{0.5\linewidth}
-    \centering
-    \begin{tikzfigure}
-    \missingfigure[figcolor=white]{Testing figcolor}
-
-    {\small{New Orleans Pelicans on FT\%}}
-    \end{tikzfigure}%
-\end{minipage}
-\hfill
-\begin{minipage}{0.5\linewidth}
-    \centering
-    \begin{tikzfigure}
-    \missingfigure[figcolor=white]{Testing figcolor}
-
-    {\small{New Orleans Pelicans on FTA}}
-    \end{tikzfigure}%
-\end{minipage}
-\vspace{.2cm}
-\begin{description}
-\item
-\texttt{New Orleans Pelicans} has more players with
-lower \{free throw percentage\}, \{free throws attempted\}.
-\end{description}
 }
 %%%%%%%%%% -------------------------------------------------------------------- %%%%%%%%%%
 
+\block{	Result}{
+	The result of the experiment is showed in the following table:
+\begin{center}
+	\begin{tabular}{cccccc}
+		\toprule
+		& RandomForest  & Bagging & Boosting & KNN & SVC\\
+		\midrule
+		DATA\_1&  0.32 &  0.30 &  0.30 & 0.31 & 0.33\\
+		DATA\_2 &  0.35 &  0.34 &  0.34 & 0.30 & 0.34\\
+		\bottomrule
+	\end{tabular}
+\end{center}
 
+\begin{center}
+	\begin{tabular}{ccccc}
+		\toprule
+		& acc\_train  & acc\_test & loss\_train & loss\_test \\
+		\midrule
+		TextCNN&  0.64 &  0.33 &  1.24 & 1.67 \\
+		LSTM &  0.28 &  0.22 &  1.76 & 1.78 \\
+		\bottomrule
+	\end{tabular}
+\end{center}
+
+\
+}
 % Second column - second block
 %%%%%%%%%% -------------------------------------------------------------------- %%%%%%%%%%
 \block[titlewidthscale=1, bodywidthscale=1]
 {Conclusion}
 {
-\begin{description}
-  \item[Problem Definition]
-  Formalize the problem of Group Outlying Aspects Mining by extending outlying aspects mining.
+\begin{itemize}
+	\item
+	There is not much difference between 
+	the values of Valence, Arousal and Dominance 
+	dimensional emotions scores predicted by EDLD
+	and the labeled VAD.
+	\item
+	Neural network parameters need to be adjusted
+\end{itemize}
 
-  \item[GOAM algorithm]
-  Propose GOAM algorithm to solve the \emph{Group}\\
-  \emph{Outlying Aspects Mining} problem.
-
-  \item[Strategies]
-  Utilize the pruning strategies to \\ reduce time complexity.
-\end{description}
 }
 %%%%%%%%%% -------------------------------------------------------------------- %%%%%%%%%%
 
@@ -393,9 +391,7 @@ radius=2cm, width=.26\textwidth]{
 Acknowledgement
 \begin{itemize}
     \item
-    International Cooperation Project (Y7Z0511101)
-    of IIE,
-    Chinese Academy of Sciences
+    ai
  \end{itemize}
 }
 
@@ -427,9 +423,7 @@ Acknowledgement
 \end{minipage}
 \begin{minipage}{0.7\linewidth}
 { \centering
- The $11^{th}$ International Conference on Knowledge Science,
-  Engineering and Management (KSEM 2018),
-  17-19/08/2018, Changchun, China
+ Tulip
 }
 \end{minipage}
 }

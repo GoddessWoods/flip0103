@@ -120,9 +120,9 @@ basicstyle=\footnotesize\ttfamily}
 %
 \title{Flip 01 and 03 Project Final Presentation}
 \author{
-Shuxia Lin
-\\
-\\SouthEast University
+	Shuxia Lin
+	\\
+	\\SouthEast University
 }
 \date{\gitCommitterDate}
 
@@ -160,36 +160,39 @@ cf={Group Outlying Aspects Mining},
 
 %%==========================================================================================
 %%
-\begin{slide}[toc=,bm=]{Problem Definition}
-\begin{center}
-\twotonebox{\rotatebox{90}{Defn}}{\parbox{.86\textwidth}
-{Models of emotion are commonly divided into
-categorical and dimensional ones.
-Dimensional models consider affective states to
-be best described relative to a small number of
-independent emotional dimensions 
-(often two or three): 
-Valence 
-(a positive-negative scale), 
-Arousal 
-(a calm–excited scale)
-and Dominance 
-(perceived degree of control over a situation). 
-\begin{itemize}
-\item Use Label Distribution Learning
-to predict multiple emotion dimension scores for an input text.
-Then use the predicted VAD and notational VAD to 
-do emotion classification.
-\item Use Neural Network to 
-do emotion classification.
-\end{itemize}
-}}
-\end{center}
 
+
+\begin{slide}[toc=,bm=]{Problem Definition}
+	\begin{center}
+		\twotonebox{\rotatebox{90}{Defn}}{\parbox{.86\textwidth}
+			{Models of emotion are commonly divided into
+				categorical and dimensional ones.
+				Dimensional models consider affective states to
+				be best described relative to a small number of
+				independent emotional dimensions 
+				(often two or three): 
+				Valence 
+				(a positive-negative scale), 
+				Arousal 
+				(a calm–excited scale)
+				and Dominance 
+				(perceived degree of control over a situation). 
+				\begin{itemize}
+					\item Use Label Distribution Learning
+					to predict multiple emotion dimension scores for an input text.
+					Then use the predicted VAD and notational VAD to 
+					do emotion classification.
+					\item Use Neural Network to 
+					do emotion classification.
+				\end{itemize}
+		}}
+	\end{center}
+	
 \end{slide}
 
 %%==========================================================================================
 %%
+
 
 
 \section{Related Work and Challenges}
@@ -197,300 +200,293 @@ do emotion classification.
 
 %%==========================================================================================
 %%
+
 \begin{slide}{Related Work - Models of Emotion}
-%Related Work - Outlying Aspects Mining
-
-
-\begin{itemize}
-\item
-Six Basic Emotions (1992)
-
-\begin{itemize}
-\item
-anger, happiness, fear, sadness, disgust and surprise
-\end{itemize}
-
-\item 
-Valence- Arousal-Dominance Model (1994)
-
-\begin{itemize}
-	\item 
-	Valence (corresponding to the concept of polarity),
-	Arousal (a calm-excited scale) and
-	Dominance (perceived degree of control in a (social) situation)
-\end{itemize}
-\begin{center}
-\includegraphics[width=.4\linewidth]{figures/six_emotions_vad.eps}
-\end{center}
-\end{itemize}
-
-%%==========================================================================================
-
+	%Related Work - Outlying Aspects Mining
+	
+	
+	\begin{itemize}
+		\item
+		Six Basic Emotions (1992)
+		
+		\begin{itemize}
+			\item
+			anger, happiness, fear, sadness, disgust and surprise
+		\end{itemize}
+		
+		\item 
+		Valence- Arousal-Dominance Model (1994)
+		
+		\begin{itemize}
+			\item 
+			Valence (corresponding to the concept of polarity),
+			Arousal (a calm-excited scale) and
+			Dominance (perceived degree of control in a (social) situation)
+		\end{itemize}
+		\begin{center}
+			\includegraphics[width=.4\linewidth]{figures/six_emotions_vad.eps}
+		\end{center}
+	\end{itemize}
+	
+	%%==========================================================================================
+	
 \end{slide}
 %%
 %%==========================================================================================
 
-
-%%==========================================================================================
-%%
-\begin{slide}{Related Work - Label Distribution Learning}
-
-\begin{itemize}
-	\item 
-	Formulation of LDL
+	\begin{slide}{Related Work - Label Distribution Learning}
 	
 	\begin{itemize}
 		\item 
-		The training set $ S = \{ ( x_{i} , D_{i} )  \} ˆn_{ i = 1 } $
+		Formulation of LDL
+		
+		\begin{itemize}
+			\item 
+			The training set $ S = \{ ( x_{i} , D_{i} )  \} ˆn_{ i = 1 } $
+			\item 
+			The label distribution of $ x_{i}  $ is denoted by 
+			$ D_{i} $ = \{ 
+			$ d ˆ {y_{1}} _{ x_{i} } , 
+			d ˆ {y_{2}} _{ x_{i} } ,...,
+			d ˆ {y_{c}} _{ x_{i} }  $ \}
+			and 
+			$ \sum_{y}  d^y_{x} = 1 $
+			\item 
+			The goal of LDL is to 
+			learn a conditional probability mass function 
+			$ p(y|x) $ from $ S $
+		\end{itemize}
+		
 		\item 
-		The label distribution of $ x_{i}  $ is denoted by 
-	    $ D_{i} $ = \{ 
-	    	$ d ˆ {y_{1}} _{ x_{i} } , 
-	    	d ˆ {y_{2}} _{ x_{i} } ,...,
-	    	d ˆ {y_{c}} _{ x_{i} }  $ \}
-		and 
-		$ \sum_{y}  d^y_{x} = 1 $
-		\item 
-		The goal of LDL is to 
-		learn a conditional probability mass function 
-		$ p(y|x) $ from $ S $
+		Method of LDL
+		
+		\begin{itemize}
+			\item 
+			Suppose $ p(y|x) $  is a parametric model
+			$ p(y|x;{\theta}) $, 
+			where $ \theta $ is the parameter vector. 
+			\item 
+			Kullback-Leibler divergence	
+			
+			$ \theta ^{\ast} = 
+			\mathop{\arg\min}\limits_{\theta}
+			\sum\limits_{i}
+			\sum\limits_{j}
+			( d_{ x_{ i } } ˆ{ y_{ j } }
+			\ln \dfrac{ d_{ x_{ i } } ˆ{ y_{ j } } }{ p( y_{ j } | x_{ i } ;{\theta}) }
+			)$	
+			\item 
+			Assumes the parametric model 
+			$ p(y|x;{\theta}) $ 
+			to be the maximum entropy model	
+			
+			$ p(y|x;{\theta}) = \dfrac{1}{Z}
+			\exp ( \sum\limits_{k}
+			{\theta}_{y,k} 
+			g_{k}( \textbf{x})  ) $ 
+			
+			where $ Z = \sum _{y}
+			\sum_{k}  {\theta}_{y,k}  g_{k}( \textbf{x}) $
+			is a normalization factor,
+			$ {\theta}_{y,k} $ is an element in \textbf {$\theta$} ,
+			and $ g_{k}( \textbf{x}) $ is the \textit{k}-th feature of \textbf{ x }
+		\end{itemize}
+		
+		%%    
 	\end{itemize}
 	
-	\item 
-	Method of LDL
-	
-	\begin{itemize}
-		\item 
-		Suppose $ p(y|x) $  is a parametric model
-		 $ p(y|x;{\theta}) $, 
-		 where $ \theta $ is the parameter vector. 
-		\item 
-		Kullback-Leibler divergence	
-		
-		$ \theta ^{\ast} = 
-		 \mathop{\arg\min}\limits_{\theta}
-		 \sum\limits_{i}
-		 \sum\limits_{j}
-		 ( d_{ x_{ i } } ˆ{ y_{ j } }
-		 \ln \dfrac{ d_{ x_{ i } } ˆ{ y_{ j } } }{ p( y_{ j } | x_{ i } ;{\theta}) }
-		 )$	
-		\item 
-		Assumes the parametric model 
-		$ p(y|x;{\theta}) $ 
-		to be the maximum entropy model	
-		
-		$ p(y|x;{\theta}) = \dfrac{1}{Z}
-		\exp ( \sum\limits_{k}
-		{\theta}_{y,k} 
-		g_{k}( \textbf{x})  ) $ 
-		
-		where $ Z = \sum _{y}
-		\sum_{k}  {\theta}_{y,k}  g_{k}( \textbf{x}) $
-		is a normalization factor,
-		$ {\theta}_{y,k} $ is an element in \textbf {$\theta$} ,
-		and $ g_{k}( \textbf{x}) $ is the \textit{k}-th feature of \textbf{ x }
-	\end{itemize}
-
-%%    
-\end{itemize}
-
-%%=========================================================================================
+	%%=========================================================================================
 \end{slide}
-%%
-%%==========================================================================================
-
-
 %%==========================================================================================
 %%
+
 \begin{slide}{Challenges }
-%Challenges (1)
-\begin{itemize}
-\item
-The output of LDL is the proportion that 
-$ y $ accounts for in a full description of $ x $ .
-One of the limitation factors is that 
-$ \sum_{y}  d^y_{x} = 1 $.
-In this problem, the value of 
-Valence, Arousal and Dominance 
-dimensional emotion scores are labels.
-If we just normalize the three values,
-after predict we can't get the scores
-of the three dimensional emotions.
-
-\bigskip
-
-\item
-The lack of large-scale emotion regression corpora in high quality.
-
-\bigskip
-
-\item
-Human factors may cause inaccurate labeling of the dataset , 
-which may lead to the low accuracy of emotion classification.  
-
-\end{itemize}
-
-
+	%Challenges (1)
+	\begin{itemize}
+		\item
+		The output of LDL is the proportion that 
+		$ y $ accounts for in a full description of $ x $ .
+		One of the limitation factors is that 
+		$ \sum_{y}  d^y_{x} = 1 $.
+		In this problem, the value of 
+		Valence, Arousal and Dominance 
+		dimensional emotion scores are labels.
+		If we just normalize the three values,
+		after predict we can't get the scores
+		of the three dimensional emotions.
+		
+		\bigskip
+		
+		\item
+		The lack of large-scale emotion regression corpora in high quality.
+		
+		\bigskip
+		
+		\item
+		Human factors may cause inaccurate labeling of the dataset , 
+		which may lead to the low accuracy of emotion classification.  
+		
+	\end{itemize}
+	
+	
 \end{slide}
 %%
 %%==========================================================================================
-
 
 \section{Data Set}
 
 %%==========================================================================================
 %%
 \begin{slide}[toc=,bm=]{Data Set}
-
-\begin{itemize}
-\item
-Emobank contains 10,548 texts annotated with
-Valence, Arousal and Dominance 
-dimensional emotion scores, 
-ranged from 1.0 to 5.0.
-\begin{center}
-	\begin{tabular}{ c c c c }
-		\toprule
-		Corpus & Domain  & Raw & Filtered  \\
-		\midrule
-		SE07 &  news headlines &  1250 &  1192 \\
-		\hline
-		\multirow{6}{*}{MASC} &  blogs&  1378&  1336\\
-		&  essays &  1196 &  1135 \\
-		&  fiction &  2893 &  2753 \\
-		&  letters &  1479 &  1413 \\
-		& newspapers & 1381 & 1314 \\
-		& traval guides & 971 & 919 \\
-		\bottomrule
-	\end{tabular}
-\end{center}
-
-\item 
-SE07 is  annotated according to 
-Ekman’s six Basic Emotion 
-on a [0,100] scale, respectively.
-
-\end{itemize}
-
+	
+	\begin{itemize}
+		\item
+		Emobank contains 10,548 texts annotated with
+		Valence, Arousal and Dominance 
+		dimensional emotion scores, 
+		ranged from 1.0 to 5.0.
+		\begin{center}
+			\begin{tabular}{ c c c c }
+				\toprule
+				Corpus & Domain  & Raw & Filtered  \\
+				\midrule
+				SE07 &  news headlines &  1250 &  1192 \\
+				\hline
+				\multirow{6}{*}{MASC} &  blogs&  1378&  1336\\
+				&  essays &  1196 &  1135 \\
+				&  fiction &  2893 &  2753 \\
+				&  letters &  1479 &  1413 \\
+				& newspapers & 1381 & 1314 \\
+				& traval guides & 971 & 919 \\
+				\bottomrule
+			\end{tabular}
+		\end{center}
+		
+		\item 
+		SE07 is  annotated according to 
+		Ekman’s six Basic Emotion 
+		on a [0,100] scale, respectively.
+		
+	\end{itemize}
+	
 \end{slide}
-%%
-%%==========================================================================================
+
+
 
 \section{Method}
 
 
-%%==========================================================================================
-%
-\begin{slide}{Dimensional Emotion Distribution Learning Algorithm}
-
-\begin{itemize}
-	\item Model
+	\begin{slide}{Dimensional Emotion Distribution Learning Algorithm}
 	
 	\begin{itemize}
-		\item 
-		The training set $ S = \{ ( x_{i} , D_{i} )  \} ˆn_{ i = 1 } $
-		\item 
-		The label distribution of $ x_{i}  $ is denoted by 
-		$ D_{i} $ = \{ 
-		$ d ˆ {y_{v}} _{ x_{i} } , 
-		d ˆ {y_{a}} _{ x_{i} } ,
-		d ˆ {y_{d}} _{ x_{i} } ,
-		d ˆ {y_{n}} _{ x_{i} }  $ \}
+		\item Model
 		
-		where $ d ˆ {y_{v}} _{ x_{i} }  = \dfrac{scoreˆ{v}_{ x_{i} }} {15} $ , 
-		 $ d ˆ {y_{a}} _{ x_{i} }  = \dfrac{scoreˆ{a}_{ x_{i} }} {15} $ ,
-		  $d ˆ {y_{a}} _{ x_{i} }= \dfrac{scoreˆ{d}_{ x_{i} }}{15} $ 
-		  and $ y_{n} = 1 - y_{v}  - y_{a} - y_{d} $
-	\end{itemize}
-
-	\item 
-	Proof
-	
-	\begin{itemize}
+		\begin{itemize}
+			\item 
+			The training set $ S = \{ ( x_{i} , D_{i} )  \} ˆn_{ i = 1 } $
+			\item 
+			The label distribution of $ x_{i}  $ is denoted by 
+			$ D_{i} $ = \{ 
+			$ d ˆ {y_{v}} _{ x_{i} } , 
+			d ˆ {y_{a}} _{ x_{i} } ,
+			d ˆ {y_{d}} _{ x_{i} } ,
+			d ˆ {y_{n}} _{ x_{i} }  $ \}
+			
+			where $ d ˆ {y_{v}} _{ x_{i} }  = \dfrac{scoreˆ{v}_{ x_{i} }} {15} $ , 
+			$ d ˆ {y_{a}} _{ x_{i} }  = \dfrac{scoreˆ{a}_{ x_{i} }} {15} $ ,
+			$d ˆ {y_{a}} _{ x_{i} }= \dfrac{scoreˆ{d}_{ x_{i} }}{15} $ 
+			and $ y_{n} = 1 - y_{v}  - y_{a} - y_{d} $
+		\end{itemize}
+		
 		\item 
-		Assume $ T(\theta) =  \mathop{\arg\min}\limits_{\theta}
-		\sum\limits_{i}
-		\sum\limits_{j}
-		( d_{ x_{ i } } ˆ{ y_{ j } }
-		\ln \dfrac{ d_{ x_{ i } } ˆ{ y_{ j } } }{ p( y_{ j } | x_{ i } ;{\theta}) } $,
-		for each step, it updates the current estimate of the parameters 
-		\textbf{$\theta$} to \textbf{ $\theta + \delta$},
-		where \textbf{$ \delta $} minimizes a lower bound to the change in likelihood
-		$ T(\theta + \delta) - T(\theta) = \sum\limits_{ij} 
-		 d_{ x_{ i } } ˆ{ y_{ j } } (
-		 \ln p( y_{ j } | x_{ i } ;{\theta}) -
-		 \ln p( y_{ j } | x_{ i } ;{\theta + \delta}) )$
-		 
-		 \item 
-		 For rmse,
-		 $ \mathop{\min}\sum\limits_{ij}
-		  (d_{ x_{ i } } ˆ{ y_{ j } }  - 
-		  p( y_{ j } | x_{ i } ;{\theta}))ˆ2$
-		  is equal to 
-		  $ R(\theta) = \mathop{\min} \sum\limits_{ij}
-		  |d_{ x_{ i } } ˆ{ y_{ j } }  - 
-		  p( y_{ j } | x_{ i } ;{\theta})| $,
-		  and for each update,
-		  $ R(\theta + \delta) - R(\theta) 
-		  \leq  
-		  \sum\limits_{ij} |
-		  d_{ x_{ i } } ˆ{ y_{ j } }  - 
-		  p( y_{ j } | x_{ i } ;{\theta + \delta}) - 
-		  (d_{ x_{ i } } ˆ{ y_{ j } }  - 
-		  p( y_{ j } | x_{ i } ;{\theta})) | =
-		  \sum\limits_{ij}
-		  | \ln p( y_{ j } | x_{ i } ;{\theta}) -
-		  \ln p( y_{ j } | x_{ i } ;{\theta + \delta}) |$
-		 
+		Proof
+		
+		\begin{itemize}
+			\item 
+			Assume $ T(\theta) =  \mathop{\arg\min}\limits_{\theta}
+			\sum\limits_{i}
+			\sum\limits_{j}
+			( d_{ x_{ i } } ˆ{ y_{ j } }
+			\ln \dfrac{ d_{ x_{ i } } ˆ{ y_{ j } } }{ p( y_{ j } | x_{ i } ;{\theta}) } $,
+			for each step, it updates the current estimate of the parameters 
+			\textbf{$\theta$} to \textbf{ $\theta + \delta$},
+			where \textbf{$ \delta $} minimizes a lower bound to the change in likelihood
+			$ T(\theta + \delta) - T(\theta) = \sum\limits_{ij} 
+			d_{ x_{ i } } ˆ{ y_{ j } } (
+			\ln p( y_{ j } | x_{ i } ;{\theta}) -
+			\ln p( y_{ j } | x_{ i } ;{\theta + \delta}) )$
+			
+			\item 
+			For rmse,
+			$ \mathop{\min}\sum\limits_{ij}
+			(d_{ x_{ i } } ˆ{ y_{ j } }  - 
+			p( y_{ j } | x_{ i } ;{\theta}))ˆ2$
+			is equal to 
+			$ R(\theta) = \mathop{\min} \sum\limits_{ij}
+			|d_{ x_{ i } } ˆ{ y_{ j } }  - 
+			p( y_{ j } | x_{ i } ;{\theta})| $,
+			and for each update,
+			$ R(\theta + \delta) - R(\theta) 
+			\leq  
+			\sum\limits_{ij} |
+			d_{ x_{ i } } ˆ{ y_{ j } }  - 
+			p( y_{ j } | x_{ i } ;{\theta + \delta}) - 
+			(d_{ x_{ i } } ˆ{ y_{ j } }  - 
+			p( y_{ j } | x_{ i } ;{\theta})) | =
+			\sum\limits_{ij}
+			| \ln p( y_{ j } | x_{ i } ;{\theta}) -
+			\ln p( y_{ j } | x_{ i } ;{\theta + \delta}) |$
+			
+		\end{itemize}
 	\end{itemize}
-\end{itemize}
-
+	
 \end{slide}
+
 %%
 %%==========================================================================================
 
 \begin{slide}{TextCNN}
 	
-The textCNN model mainly uses 
-a one-dimensional convolutional layer and 
-a max-over-time pooling layer. 
-Assume that 
-the input text sequence consists of $ n $ words, 
-and each word is represented by 
-a $ d  $dimensional word vector. 
-Then the width of the input sample is$  n $, 
-the height is 1, 
-and the number of input channels is $ d $. 
-The calculation of textCNN is mainly divided into the following steps.
-
-\begin{itemize}
-	\item 
-	Define multiple one-dimensional convolution kernels, 
-	and use these convolution kernels to 
-	perform convolution calculations on the inputs. 
-	\item 
-	All the channels of the output are individually pooled 
-	in max-over-time pooling, 
-	and the pooled output values of 
-	these channels are connected into a vector.
-	\item 
-	The fully connected layer transforms 
-	the connected vectors into outputs for each class. 
-	This step can use the dropout layer to deal with overfitting.
-\end{itemize}
-
+	The textCNN model mainly uses 
+	a one-dimensional convolutional layer and 
+	a max-over-time pooling layer. 
+	Assume that 
+	the input text sequence consists of $ n $ words, 
+	and each word is represented by 
+	a $ d  $dimensional word vector. 
+	Then the width of the input sample is$  n $, 
+	the height is 1, 
+	and the number of input channels is $ d $. 
+	The calculation of textCNN is mainly divided into the following steps.
+	
+	\begin{itemize}
+		\item 
+		Define multiple one-dimensional convolution kernels, 
+		and use these convolution kernels to 
+		perform convolution calculations on the inputs. 
+		\item 
+		All the channels of the output are individually pooled 
+		in max-over-time pooling, 
+		and the pooled output values of 
+		these channels are connected into a vector.
+		\item 
+		The fully connected layer transforms 
+		the connected vectors into outputs for each class. 
+		This step can use the dropout layer to deal with overfitting.
+	\end{itemize}
+	
 \end{slide}
 %%
 %%==========================================================================================
 
 \begin{slide}[toc=,bm=]{TextCNN}
-
-\begin{figure}
-	\includegraphics[width=.7\linewidth]{figures/textCNN_en.eps}
-	\caption{A example of TextCNN}
-\end{figure}
 	
-
+	\begin{figure}
+		\includegraphics[width=.7\linewidth]{figures/textCNN_en.eps}
+		\caption{A example of TextCNN}
+	\end{figure}
+	
+	
 \end{slide}
 
 
@@ -498,123 +494,128 @@ The calculation of textCNN is mainly divided into the following steps.
 %%==========================================================================================
 
 \begin{slide}{LSTM}
-In the code I implement 
-\begin{itemize}
-	\item 
-	 the Embedding instance is the embedding layer
-	 \item 
-	 the LSTM instance is the hidden layer of sequence encoding
-	 \item 
-	 the Linear instance is the output layer that generates the classification results
-\end{itemize}
-
-\bigskip
-
-\begin{figure}
-	\includegraphics[width=.5\linewidth]{figures/lstm_en.eps}
-	\caption{Calculation of input, forget, and output gates in an LSTM}
-\end{figure}
-
-
+	In the code I implement 
+	\begin{itemize}
+		\item 
+		the Embedding instance is the embedding layer
+		\item 
+		the LSTM instance is the hidden layer of sequence encoding
+		\item 
+		the Linear instance is the output layer that generates the classification results
+	\end{itemize}
+	
+	\bigskip
+	
+	\begin{figure}
+		\includegraphics[width=.5\linewidth]{figures/lstm_en.eps}
+		\caption{Calculation of input, forget, and output gates in an LSTM}
+	\end{figure}
+	
+	
 \end{slide}
 
 %%
 %%==========================================================================================
 
 
-\section{Experiment}
+
+%%==========================================================================================
+%%
+
+	\section{Experiment}
 
 %%==========================================================================================
 %%
 \begin{slide}{Experiment One}
-%Step One - Group Feature Extraction}
-\begin{itemize}
-\item
-Data Processing
-
-\begin{itemize}
-	\item 
-	Use Bert to train the sentence encoding/embedding
-	of Emobank corpus, that is the feature vectors $ x_{i} $
-	\item 
-	Transform the scores of Valence, Arousal and Dominance 
-	dimensional emotion into 
-	the label distribution 
-	$ D_{i} $ = \{ 
-	$ d ˆ {y_{v}} _{ x_{i} } , 
-	d ˆ {y_{a}} _{ x_{i} } ,
-	d ˆ {y_{d}} _{ x_{i} } ,
-	d ˆ {y_{n}} _{ x_{i} }  $ \}
-\end{itemize}
-
-\item 
-Predict the scores of 
-Valence, Arousal and Dominance dimensional emotion
-through the EDLD
-for the sentences in the SE07 corpus.
-
-\item 
-New Data Set
-
-\begin{itemize}
-	\item 
-	DATASET_1 : predicted VAD is the features and 
-	the emotion categories corresponding to 
-	the max scales of the sentences in SE07.
-	\item 
-	DATASET_2 : Annotated VAD is the features and 
-	the emotion categories corresponding to 
-	the max scales of the sentences in SE07.
-\end{itemize}
-
-\item 
-Algorithm
-
-\begin{itemize}
-	\item DecisionTree, KNeighbors, LogisticRegression and so on.
+	%Step One - Group Feature Extraction}
+	\begin{itemize}
+		\item
+		Data Processing
+		
+		\begin{itemize}
+			\item 
+			Use Bert to train the sentence encoding/embedding
+			of Emobank corpus, that is the feature vectors $ x_{i} $
+			\item 
+			Transform the scores of Valence, Arousal and Dominance 
+			dimensional emotion into 
+			the label distribution 
+			$ D_{i} $ = \{ 
+			$ d ˆ {y_{v}} _{ x_{i} } , 
+			d ˆ {y_{a}} _{ x_{i} } ,
+			d ˆ {y_{d}} _{ x_{i} } ,
+			d ˆ {y_{n}} _{ x_{i} }  $ \}
+		\end{itemize}
+		
+		\item 
+		Predict the scores of 
+		Valence, Arousal and Dominance dimensional emotion
+		through the EDLD
+		for the sentences in the SE07 corpus.
+		
+		\item 
+		New Data Set
+		
+		\begin{itemize}
+			\item 
+			DATASET_1 : predicted VAD is the features and 
+			the emotion categories corresponding to 
+			the max scales of the sentences in SE07.
+			\item 
+			DATASET_2 : Annotated VAD is the features and 
+			the emotion categories corresponding to 
+			the max scales of the sentences in SE07.
+		\end{itemize}
+		
+		\item 
+		Algorithm
+		
+		\begin{itemize}
+			\item DecisionTree, KNeighbors, LogisticRegression and so on.
+			
+		\end{itemize}
+	\end{itemize}
 	
-\end{itemize}
-\end{itemize}
-
 \end{slide}
+
+
 %%
 %%==========================================================================================
 
 \begin{slide}{Experiment Two }
-%Step Two - Outlying Degree Scoring
-\bigskip
-
-\begin{itemize}
-
-\item 
-Load data
-\item 
-Text Preprocessing
-
-\begin{itemize}
-	\item 
-	Tokenization : Split strings into tokens
-	\item 
-	Vocabulary : Build a vocabulary for these tokens to map them into numerical indices.
-	\item 
+	%Step Two - Outlying Degree Scoring
+	\bigskip
 	
-\end{itemize}
-
-\item 
-Using a TextCNN or LSTM Model
-
-\item 
-Loading Pre-trained Word Vectors
-
-\item 
-Training and Evaluating the Model
-
-\end{itemize}
-
+	\begin{itemize}
+		
+		\item 
+		Load data
+		\item 
+		Text Preprocessing
+		
+		\begin{itemize}
+			\item 
+			Tokenization : Split strings into tokens
+			\item 
+			Vocabulary : Build a vocabulary for these tokens to map them into numerical indices.
+			\item 
+			Fix the sentences length.
+		\end{itemize}
+		
+		\item 
+		Using a TextCNN or LSTM Model
+		
+		\item 
+		Loading Pre-trained Word Vectors
+		
+		\item 
+		Training and Evaluating the Model
+		
+	\end{itemize}
+	
 \end{slide}
 %%
 %%==========================================================================================
-
 
 
 \section{Evaluation Results}
@@ -631,9 +632,9 @@ Training and Evaluating the Model
 \smallskip
 \large
 {$Accuracy = \frac{P}{T}$ \\
-P: Identified outlying aspects \\
+P: The predicted value is the same as the true value \\
 
-T: Real outlying aspects}
+T: The number of test data set}
 
 \end{itemize}
 \end{center}
@@ -642,29 +643,52 @@ T: Real outlying aspects}
 %%
 %%==========================================================================================
 
-
 \begin{slide}{Results}
+	
+	\begin{table}[tb]
+		\setlength{\abovecaptionskip}{0pt}
+		\setlength{\belowcaptionskip}{10pt}
+		\centering
+		\caption{The accuracy of the expriment one}
+		
+		\begin{tabular}{cccccc}
+			\toprule
+			& RandomForest  & Bagging & Boosting & KNN & SVC\\
+			\midrule
+			DATA\_1&  0.32 &  0.30 &  0.30 & 0.31 & 0.33\\
+			DATA\_2 &  0.35 &  0.34 &  0.34 & 0.30 & 0.34\\
+			\bottomrule
+		\end{tabular}
+	\end{table}
+	
+	\begin{table}[tb]
+		\setlength{\abovecaptionskip}{0pt}
+		\setlength{\belowcaptionskip}{10pt}
+		\centering
+		\caption{The result of the expriment two}
+		
+		\begin{tabular}{ccccc}
+			\toprule
+			& acc_train  & acc_test & loss_train & loss_test \\
+			\midrule
+			TextCNN&  0.64 &  0.33 &  1.24 & 1.67 \\
+			LSTM &  0.35 &  0.34 &  0.34 & 0.30 \\
+			\bottomrule
+		\end{tabular}
+	\end{table}
+	
+\end{slide}
 
-\begin{table}[tb]
-\setlength{\abovecaptionskip}{0pt}
-\setlength{\belowcaptionskip}{10pt}
-\centering
-\caption{The experiment result on synthetic dataset}
+%%
+%%==========================================================================================
 
-\begin{tabular}{ c | c | c | c }
-\toprule
-  % after \\: \hline or \cline{col1-col2} \cline{col3-col4} ...
-  Method     &  Truth Outlying Aspects    & Identified Aspects & Accuracy      \\
-\midrule
-  GOAM       &  $\{F_1\}$, $\{F_2F_4\}$   &  $\{F_1\}$, $\{F_2F_4\}$    & 100\%    \\
-
-Arithmetic Mean based OAM &  $\{F_1\}$, $\{F_2F_4\}$   &  $\{F_4\}$, $\{F_2\}$    &  0\% \\
-
-Median based OAM &  $\{F_1\}$, $\{F_2F_4\}$   &  $\{F_2\}$, $\{F_4\}$    &           0\% \\
-\bottomrule
-\end{tabular}
-\end{table}
-
+\begin{slide}{Result}
+	\begin{center}
+		\includegraphics[width=.4\linewidth,height=.3\linewidth]{figures/cnn_acc.eps}
+		\quad\includegraphics[width=.4\linewidth,height=.3\linewidth]{figures/cnn_loss.eps}
+	\end{center}
+	
+	
 \end{slide}
 %%
 %%==========================================================================================
@@ -675,37 +699,28 @@ Median based OAM &  $\{F_1\}$, $\{F_2F_4\}$   &  $\{F_2\}$, $\{F_4\}$    &      
 %%==========================================================================================
 %%
 \begin{slide}[toc=,bm=]{Conclusion}
+
+\bigskip
 \begin{itemize}
-\item
-\smallskip
-Formalize the problem of \emph{Group Outlying Aspects Mining} by
-extending outlying aspects mining;
-
-\item
-\smallskip
-Propose a novel method \textcolor{orange}{GOAM algorithm} to solve the
-\emph{Group Outlying Aspects Mining} problem;
-
-\item
-\smallskip
-Utilize the pruning strategies to reduce time complexity.
-
+	\item
+	\smallskip
+	There is not much difference between 
+	the values of Valence, Arousal and Dominance 
+	dimensional emotions scores predicted by EDLD
+	and the labeled VAD.
+	
+	\smallskip
+	
+	\item
+	\smallskip
+	May the VAD is not suitable 
+	for emtion classifation.
+	
+	\item
+	\smallskip
+	Neural network parameters need to be adjusted
 \end{itemize}
 
-%%==========================================================================================
-\begin{note}
-In conclusion,
-we firstly formalized the problem of
-group outlying aspects mining,
-
-Then proposed a novel method GOAM algorithm to address the problem of
-group outlying aspects mining,
-and the proposed method use pruning to reduce time complexity
-while identifying the suitable set of outlying features for the interested group.
-
-Thank you and any question?
-\end{note}
-%%==========================================================================================
 
 \end{slide}
 %%

@@ -585,7 +585,7 @@ shows the result of base models
 on DATA\_1 and DATA\_2.
 
 \begin{table} [htbp] \centering
-  \caption{Precision Comparison on Event Detection Methods}
+  \caption{The accuracy of the expriment one}
   \label{tbl:overall-experiments}
   \begin{tabular}{cccccc}
 \toprule
@@ -597,12 +597,48 @@ DATA\_2 &  0.35 &  0.34 &  0.34 & 0.30 & 0.34\\
 \end{tabular}
 \end{table}
 
+The following table shows that
+the accuracy and the loss of 
+the TextCNN and LSTM network.
+
+\begin{table} [htbp] \centering
+	\caption{The result of the expriment two}
+	\label{tbl:overall-experiments}
+	\begin{tabular}{ccccc}
+	\toprule
+	& acc_train  & acc_test & loss_train & loss_test \\
+	\midrule
+	TextCNN&  0.64 &  0.33 &  1.24 & 1.67 \\
+	LSTM &  0.35 &  0.34 &  0.34 & 0.30 \\
+	\bottomrule
+	\end{tabular}
+\end{table}
+
+
 
 %%==========================================================================================
 %%
 
 \section{Conclusions} \label{sec-conclusions}
 
+\begin{itemize}
+	\item
+	\smallskip
+	There is not much difference between 
+	the values of Valence, Arousal and Dominance 
+	dimensional emotions scores predicted by EDLD
+	and the labeled VAD.
+	
+	\smallskip
+	
+	\item
+	\smallskip
+	
+	
+	\item
+	\smallskip
+	Neural network parameters need to be adjusted
+\end{itemize}
 
 
 \section*{Acknowledgment}
