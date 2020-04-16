@@ -39,19 +39,42 @@ SouthEast University, NanJing 211189, China}%
 \date{\gitAuthorDate}%
 
 \begin{abstract}
+
+While research on emotions has become 
+one of the most productive areas at 
+the intersection of cognitive science, 
+artificial intelligence and natural language processing,
+the diversity and incommensurability of 
+emotion models seriously hampers progress in the field.
 Models of emotion are commonly divided into
 categorical and dimensional ones.
-In this paper,
-we propose Dimensional Emotion Distribution Learning
-to predict the value of
-the Valence-Arousal-Dominance dimensional emotions.
+Compared to the categorical approach
+that represents affective states as 
+several discrete classes (e.g., positive and negative),
+the dimensional approach represents
+affective states as continuous numerical values 
+on multiple dimensions,
+such as the valence-arousal-dominance (VAD) space,
+thus allowing for 
+more fine-grained sentiment analysis. 
+In building dimensional sentiment applications, 
+affective lexicons
+with valence-arousal-dominance ratings are 
+useful resources but 
+are still very rare.
+In this paper, 
+we propose a novel approach
+based on emotion distribution learning.
+The key idea is to learn a mapping function
+from sentences to their dimensional emotion distributions
+by the proposed 
+Dimensional Emotion Distribution Learning(DEDL)
+method.
 And then,
 we use the predicted value of VAD and 
 the notational VAD to 
 classification the emotion category.
-Also,
-we use netural network to do 
-the emotion classification.
+
 \end{abstract}
 
 \maketitle
